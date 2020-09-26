@@ -1,11 +1,15 @@
-package com.balceda.hibernate.demo.superclass.joinedtable.entity;
+package com.balceda.hibernate.demo.superclass.entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "instructor")
 public class Instructor extends User {
 
+    @Column(name = "salary")
     private Double salary;
 
     public Instructor() {

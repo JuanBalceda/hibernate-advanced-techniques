@@ -1,7 +1,7 @@
-package com.balceda.hibernate.demo.superclass.joinedtable;
+package com.balceda.hibernate.demo.superclass;
 
-import com.balceda.hibernate.demo.superclass.joinedtable.entity.Instructor;
-import com.balceda.hibernate.demo.superclass.joinedtable.entity.Student;
+import com.balceda.hibernate.demo.superclass.entity.Instructor;
+import com.balceda.hibernate.demo.superclass.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -44,7 +44,7 @@ public class DemoApp {
             Student student = session.get(Student.class, 1L);
             System.out.println(student);
 
-            Instructor instructor = session.get(Instructor.class, 2L);
+            Instructor instructor = session.get(Instructor.class, 1L);
             System.out.println(instructor);
 
             session.getTransaction().commit();

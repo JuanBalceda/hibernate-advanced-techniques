@@ -1,4 +1,4 @@
-package com.balceda.hibernate.demo.superclass.joinedtable.entity;
+package com.balceda.hibernate.demo.superclass.entity;
 
 import javax.persistence.*;
 
@@ -7,16 +7,16 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Column(name = "first_name")
-    private String firstName;
+    protected String firstName;
 
     @Column(name = "last_name")
-    private String lastName;
+    protected String lastName;
 
     @Column(name = "email")
-    private String email;
+    protected String email;
 
     public User() {
     }
