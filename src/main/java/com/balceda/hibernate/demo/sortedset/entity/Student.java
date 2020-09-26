@@ -1,15 +1,11 @@
-package com.balceda.hibernate.demo.set.entity;
-
-import lombok.Getter;
-import lombok.Setter;
+package com.balceda.hibernate.demo.sortedset.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "student")
-@Getter @Setter
 public class Student {
 
     @Id
@@ -26,10 +22,11 @@ public class Student {
     private String email;
 
     @ElementCollection
-    @CollectionTable(name = "image", // Defaults to student_images
-            joinColumns = @JoinColumn(name = "student_id"))
+    @CollectionTable(name = "image") // Defaults to student_images
+    // @OrderBy(clause = "file_name") // javax.persistence.OrderBy defaults to asc
+    @org.hibernate.annotations.OrderBy(clause = "file_name desc")
     @Column(name = "file_name") // Defaults to images
-    private Set<String> images = new HashSet<>();
+    private Set<String> images = new LinkedHashSet<>();
 
     public Student() {
     }
@@ -38,6 +35,46 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<String> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<String> images) {
+        this.images = images;
     }
 
     @Override
