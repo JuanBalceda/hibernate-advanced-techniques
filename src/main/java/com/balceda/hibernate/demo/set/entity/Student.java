@@ -1,11 +1,11 @@
-package com.balceda.hibernate.demo.entity;
+package com.balceda.hibernate.demo.set.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "student")
@@ -26,10 +26,10 @@ public class Student {
     private String email;
 
     @ElementCollection
-    @CollectionTable(name = "image")
-    @OrderColumn
-    @Column(name = "file_name")
-    private List<String> images = new ArrayList<>();
+    @CollectionTable(name = "image", // Defaults to student_images
+            joinColumns = @JoinColumn(name = "student_id"))
+    @Column(name = "file_name") // Defaults to images
+    private Set<String> images = new HashSet<>();
 
     public Student() {
     }
