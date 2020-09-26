@@ -1,11 +1,10 @@
-package com.balceda.hibernate.demo.set;
+package com.balceda.hibernate.demo.embedded;
 
-import com.balceda.hibernate.demo.set.entity.Student;
+import com.balceda.hibernate.demo.embedded.entity.Address;
+import com.balceda.hibernate.demo.embedded.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-import java.util.Set;
 
 public class DemoApp {
 
@@ -14,23 +13,41 @@ public class DemoApp {
         try (SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Student.class)
+                .addAnnotatedClass(Address.class)
                 .buildSessionFactory();
              Session session = factory.getCurrentSession()) {
 
             Student tempStudent = new Student("Juan", "Balceda", "juan@balceda.com");
-            Set<String> images = tempStudent.getImages();
 
-            images.add("image1.jpg");
-            images.add("image2.jpg");
-            images.add("image3.jpg");
-            images.add("image4.jpg");
-            images.add("image4.jpg"); // Duplicate filtered by HashSet
+            Address homeAddress = new Address("Carrer Cartagena", "Barcelona", "08013");
+            tempStudent.setHomeAddress(homeAddress);
 
+            Address billingAddress = new Address("Av. Guipuzcua", "Barcelona", "08020");
+            tempStudent.setBillingAddress(billingAddress);
 
             session.beginTransaction();
 
             System.out.println("Saving...");
             session.persist(tempStudent);
+
+            session.getTransaction().commit();
+            System.out.println("Done!");
+        }
+
+
+        try (SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Student.class)
+                .buildSessionFactory();
+             Session session = factory.getCurrentSession()) {
+
+            session.beginTransaction();
+
+            System.out.println("retrieving...");
+            Student student = session.get(Student.class, 1L);
+
+            System.out.println(student);
+            System.out.println(student.getHomeAddress());
 
             session.getTransaction().commit();
             System.out.println("Done!");

@@ -1,15 +1,14 @@
-package com.balceda.hibernate.demo.set.entity;
+package com.balceda.hibernate.demo.embedded.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "student")
-@Getter @Setter
+@Getter
+@Setter
 public class Student {
 
     @Id
@@ -25,11 +24,15 @@ public class Student {
     @Column(name = "email")
     private String email;
 
-    @ElementCollection
-    @CollectionTable(name = "image", // Defaults to student_images
-            joinColumns = @JoinColumn(name = "student_id"))
-    @Column(name = "file_name") // Defaults to images
-    private Set<String> images = new HashSet<>();
+    @Embedded // Optional
+    private Address homeAddress;
+
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "billing_street")),
+            @AttributeOverride(name = "city", column = @Column(name = "billing_city")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "billing_zip_code"))
+    })
+    private Address billingAddress;
 
     public Student() {
     }
@@ -38,6 +41,54 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     @Override
