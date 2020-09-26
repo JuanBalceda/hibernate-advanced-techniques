@@ -5,12 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.Set;
+import java.util.List;
 
 public class DemoApp {
 
     public static void main(String[] args) {
-
 
         try (SessionFactory factory = new Configuration()
                 .configure("hibernate.cfg.xml")
@@ -19,13 +18,12 @@ public class DemoApp {
              Session session = factory.getCurrentSession()) {
 
             Student tempStudent = new Student("Juan", "Balceda", "juan@balceda.com");
-            Set<String> images = tempStudent.getImages();
+            List<String> images = tempStudent.getImages();
 
             images.add("image1.jpg");
             images.add("image2.jpg");
             images.add("image3.jpg");
             images.add("image4.jpg");
-            images.add("image4.jpg"); // Duplicate filtered by HashSet
 
             session.beginTransaction();
 
