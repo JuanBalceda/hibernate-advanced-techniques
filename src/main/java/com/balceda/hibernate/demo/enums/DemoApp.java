@@ -1,13 +1,12 @@
-package com.balceda.hibernate.demo.sortedmap;
+package com.balceda.hibernate.demo.enums;
 
-import com.balceda.hibernate.demo.sortedmap.entity.Student;
+import com.balceda.hibernate.demo.enums.entity.Student;
+import com.balceda.hibernate.demo.enums.util.Status;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.Comparator;
 import java.util.Map;
-import java.util.SortedMap;
 
 public class DemoApp {
 
@@ -20,16 +19,16 @@ public class DemoApp {
              Session session = factory.getCurrentSession()) {
 
             Student tempStudent = new Student("Juan", "Balceda", "juan@balceda.com");
-            Map<String, String> images = tempStudent.getImages();
+            tempStudent.setStatus(Status.ACTIVE);
 
-            images.put("image3.jpg", "Image 3");
-            images.put("image1.jpg", "Image 1");
-            images.put("image2.jpg", "Image 2");
+            Student tempStudent2 = new Student("Ilenia", "Terrel", "ilenia@terrel.com");
+            tempStudent2.setStatus(Status.INACTIVE);
 
             session.beginTransaction();
 
             System.out.println("Saving...");
             session.persist(tempStudent);
+            session.persist(tempStudent2);
 
             session.getTransaction().commit();
             System.out.println("Done!");
@@ -46,7 +45,11 @@ public class DemoApp {
             System.out.println("retrieving...");
             Student student = session.get(Student.class, 1L);
 
-            System.out.println(student.getImages());
+            System.out.println(student);
+
+            Student student2 = session.get(Student.class, 2L);
+
+            System.out.println(student2);
 
             session.getTransaction().commit();
             System.out.println("Done!");

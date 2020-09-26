@@ -1,11 +1,8 @@
-package com.balceda.hibernate.demo.sortedmap.entity;
+package com.balceda.hibernate.demo.enums.entity;
 
-import com.balceda.hibernate.demo.sortedmap.util.ReverseStringComparator;
-import org.hibernate.annotations.SortComparator;
+import com.balceda.hibernate.demo.enums.util.Status;
 
 import javax.persistence.*;
-import java.util.Map;
-import java.util.TreeMap;
 
 @Entity
 @Table(name = "student")
@@ -24,13 +21,9 @@ public class Student {
     @Column(name = "email")
     private String email;
 
-    @ElementCollection
-    @CollectionTable(name = "image")
-    @MapKeyColumn(name = "file_name") // Maps Keys
-    @Column(name = "image_name") // Maps value
-    // @OrderBy()
-    @SortComparator(ReverseStringComparator.class)
-    private Map<String, String> images = new TreeMap<>();
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 
     public Student() {
     }
@@ -73,12 +66,12 @@ public class Student {
         this.email = email;
     }
 
-    public Map<String, String> getImages() {
-        return images;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setImages(Map<String, String> images) {
-        this.images = images;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -88,6 +81,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
