@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.List;
+import java.util.Map;
 
 public class DemoApp {
 
@@ -18,12 +18,11 @@ public class DemoApp {
              Session session = factory.getCurrentSession()) {
 
             Student tempStudent = new Student("Juan", "Balceda", "juan@balceda.com");
-            List<String> images = tempStudent.getImages();
+            Map<String, String> images = tempStudent.getImages();
 
-            images.add("image1.jpg");
-            images.add("image2.jpg");
-            images.add("image3.jpg");
-            images.add("image4.jpg");
+            images.put("image1.jpg", "Image 1");
+            images.put("image2.jpg", "Image 2");
+            images.put("image3.jpg", "Image 3");
 
             session.beginTransaction();
 

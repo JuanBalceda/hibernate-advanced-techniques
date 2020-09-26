@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "student")
@@ -14,7 +14,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -27,9 +27,9 @@ public class Student {
 
     @ElementCollection
     @CollectionTable(name = "image")
-    @OrderColumn
-    @Column(name = "file_name")
-    private List<String> images = new ArrayList<>();
+    @MapKeyColumn(name = "file_name")
+    @Column(name = "image_name")
+    private Map<String, String> images = new HashMap<>();
 
     public Student() {
     }
